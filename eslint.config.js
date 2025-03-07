@@ -1,13 +1,18 @@
-import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
+import { FlatCompat } from '@eslint/eslintrc'
+
+// Criar uma instância de compatibilidade para carregar configs tradicionais
+const compat = new FlatCompat()
 
 export default tseslint.config(
   { ignores: ['dist'] },
+  ...compat.config({
+    extends: ['@rocketseat/eslint-config/react'],
+  }),
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
