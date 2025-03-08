@@ -61,6 +61,9 @@ export const TaskInput = styled(BaseInput)`
   2 - Possa encolher se necessário, quando o espaço for limitado
   3 - Comece sem tamanho intrínseco, permitindo que ele se adapte completamente ao espaço disponível
  */
+  &::-webkit-calendar-picker-indicator {
+    display: none !important;
+  }
 `
 
 export const MinutesAmountInput = styled(BaseInput)`
