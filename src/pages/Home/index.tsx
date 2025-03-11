@@ -17,20 +17,33 @@ const newCycleFormValidationSchema = zod.object({
   task: zod.string().min(1, 'Informe a tarefa'),
   minutesAmount: zod
     .number()
-    .min(5, 'O ciclo precisa ser de no minimo 5 minutos.')
+    .min(5, 'O ciclo precisa ser de no mínimo 5 minutos.')
     .max(60, 'O ciclo precisa ser de no máximo 60 minutos.')
 })
 
+// Geramos automaticamente a interface typescript acima com base no schema de
+// validação do zod. Por exemplo: task está definida como zod.string()
+// então o type abaixo interfere que task é uma string, gerando uma interface
+// com os tipos corretos. Passe o mouse por cima de NewCycleFormData para ver
+// o tipo inferido.
+// interface NewCycleFormData {
+//   task: string
+//   minutesAmount: number
+// }
+type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
+
 export function Home() {
-  const { register, handleSubmit, watch, formState } = useForm({
-    resolver: zodResolver(newCycleFormValidationSchema)
+  const { register, handleSubmit, watch } = useForm<NewCycleFormData>({
+    resolver: zodResolver(newCycleFormValidationSchema),
+    defaultValues: {
+      task: '',
+      minutesAmount: 25
+    }
   })
 
-  function handleCreateNewCycle(data: any) {
+  function handleCreateNewCycle(data: NewCycleFormData) {
     console.log(data)
   }
-
-  console.log(formState.errors)
 
   const task = watch('task')
   const isSubmitDisable = !task
