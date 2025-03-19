@@ -20,7 +20,8 @@ export default tseslint.config(
         {
           arrowParens: 'avoid'
         }
-      ]
+      ],
+      'no-unused-vars': 'off'
     }
   }),
   {
