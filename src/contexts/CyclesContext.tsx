@@ -65,6 +65,20 @@ export function CyclesContextProvider({
         }
       }
 
+      if (action.type === 'INTERRUPT_CURRENT_CYCLE') {
+        return {
+          ...state,
+          cycles: state.cycles.map(cycle => {
+            if (cycle.id === state.activeCycleId) {
+              return { ...cycle, finishedDate: new Date() }
+            } else {
+              return cycle
+            }
+          }),
+          activeCycleId: null
+        }
+      }
+
       return state
     },
     {
